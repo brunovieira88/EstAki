@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conclusão de simulação</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            margin-top: 150px;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .navbar {
+            background-color: #35F9D1;
+            height: 80px;
+            border-radius: 25px;
+            padding: 0.5rem;
+            margin: 20px;
+            align-content: center;
+        }
+
+        .navbar-toggler {
+            border: none;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            color: #666777;
+            font-weight: 500;
+            position: relative;
+            font-size: 19px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #666777;
+            font-size: 24px;
+            transition: 0.3s color;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #000;
+        }
+
+        @media (min-width: 991px) {
+            .nav-link::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                background-color: #41aeed;
+                visibility: hidden;
+                transition: 0.3s ease-in-out;
+            }
+
+            .nav-link:hover::before, .nav-link.active::before {
+                width: 70%;
+                visibility: visible;
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary, .btn-danger {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="notification.html"><i class="fa fa-bell"></i></a>
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="homepage.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="lockersmap.html">Rede de cacifos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#">Quem Somos</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="howto.html">Como utilizar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="help.html">Ajuda</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end" id="bd-theme">
+                        <li><a class="navbar-brand" href="defs.html"><i class="theme-icon fa fa-gear"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h4 class="text-center">Detalhes da Encomenda</h4>
+        <ul class="list-unstyled" id="detalhesSim"></ul>
+        <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-danger" onclick="cancelar()">Cancelar</button>
+            <button class="btn btn-primary" onclick="concluirEnvio()">Concluir Simulação</button>
+        </div>
+    </div>
+
+    <script>
+        const detalhes = JSON.parse(localStorage.getItem('detalhesSim'));
+        const lista = document.getElementById('detalhesSim');
+
+        lista.innerHTML = `
+                <li><strong>Origem:</strong> ${detalhes.origem}</li>
+                <li><strong>Destino:</strong> ${detalhes.destino}</li>
+                <li><strong>Peso:</strong> ${detalhes.peso} kg</li>
+                <li><strong>Dimensões:</strong> ${detalhes.dimensoes}</li>
+                <li><strong>Tipo de envio:</strong> ${detalhes.tipoEnvio}</li>
+                <li><strong>Distância:</strong> X km</li>
+                <li><strong>Total:</strong> €X</li>
+            `;
+
+        function cancelar() {
+            alert('Envio cancelado.');
+            window.location.href = 'simulacao.html';
+        }
+
+        function concluirEnvio() {
+            alert('Envio concluído com sucesso!');
+            window.location.href = 'homepage.html';
+
+        }
+    </script>
+</body>
+</html>

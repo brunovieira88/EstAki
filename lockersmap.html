@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <title>Mapa de Cacifos</title>
+    <style>
+        body {
+            padding-top: 100px;
+            padding-bottom: 20px;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .navbar {
+            background-color: #35F9D1;
+            height: 80px;
+            border-radius: 25px;
+            padding: 0.5rem;
+            margin: 20px;
+            align-content: center;
+        }
+
+        .navbar-toggler {
+            border: none;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            color: #666777;
+            font-weight: 500;
+            position: relative;
+            font-size: 19px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #666777;
+            font-size: 24px;
+            transition: 0.3s color;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #000;
+        }
+
+        @media (min-width: 991px) {
+            .nav-link::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                background-color: #41aeed;
+                visibility: hidden;
+                transition: 0.3s ease-in-out;
+            }
+
+            .nav-link:hover::before, .nav-link.active::before {
+                width: 70%;
+                visibility: visible;
+            }
+        }
+
+
+        #map {
+            height: 70vh;
+            width: 80%;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid #35F9D1;
+        }
+
+        .add-address-btn {
+            background-color: #35F9D1;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #004d40;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+            .add-address-btn:hover {
+                background-color: #28B487;
+                color: #fff;
+            }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0f9e0;
+            border: 2px solid #35F9D1;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #35F9D1;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin: 5px;
+        }
+
+            .action-btn:hover {
+                background-color: #35F9D1;
+                color: #fff;
+            }
+
+        .action-btn-view {
+            background-color: #e0f9e0;
+            border-color: #35F9D1;
+            color: #006400;
+        }
+
+        .action-btn-remove {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+            .action-btn-remove:hover {
+                background-color: #dc3545;
+                color: #fff;
+            }
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="notification.html"><i class="fa fa-bell"></i></a>
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="homepage.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" aria-current="page" href="lockersmap.html">Rede de cacifos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#">Quem Somos</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="howto.html">Como utilizar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="help.html">Ajuda</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end" id="bd-theme">
+                        <li><a class="navbar-brand" href="defs.html"><i class="theme-icon fa fa-gear"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container text-center mt-5">
+        <h2 class="mb-4" style="font-family: 'Open Sans', sans-serif; ">Escolhe o cacifo mais perto de ti</h2>
+    </div>
+
+    <div id="map"></div>
+    <div class="container mt-4 text-center">
+        <button class="action-btn action-btn-view" onclick="viewAddress()">Ver Morada Virtual</button>
+        <button class="action-btn action-btn-remove" onclick="removeAddress()">Remover Morada Virtual</button>
+    </div>
+
+
+    <script>
+        const map = L.map('map').setView([39.3999, -8.2245], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        const cacifos = [
+            { name: 'Cacifo na Escola Secundária João Afonso de Aveiro', lat: 40.6332777544822, lon: -8.65399720306527, type: 'Escola', address: 'Avenida João Afonso, Aveiro', postalCode: '3810-123' },
+            { name: 'Cacifo no Centro Comercial Glicínias', lat: 40.627131041794264, lon: -8.645362245394626, type: 'Centro Comercial', address: 'Rua das Glicínias, Aveiro', postalCode: '3800-153' },
+            { name: 'Cacifo no Centro Comercial Fórum Aveiro', lat: 40.6410792111736, lon: -8.651889431846962, type: 'Centro Comercial', address: 'Rua do Fórum, Aveiro', postalCode: '3810-186' },
+            { name: 'Cacifo na Universidade de Aveiro - DETI', lat: 40.633148645239174, lon: -8.659364556881586, type: 'Universidade', address: 'Campus Universitário de Santiago, Aveiro', postalCode: '3810-193' },
+            { name: 'Cacifo na Estação Ferroviária de Aveiro', lat: 40.64346, lon: -8.6405, type: 'Estação de Comboios', address: 'Estação Ferroviária de Aveiro', postalCode: '3810-172' },
+            { name: 'Cacifo na Praia da Barra', lat: 40.636042, lon: -8.74858, type: 'Praia', address: 'Praia da Barra, Aveiro', postalCode: '3830-754' },
+            { name: 'Cacifo no Mercado Municipal de Aveiro', lat: 40.62659, lon: -8.65133, type: 'Mercado', address: 'Praça do Mercado, Aveiro', postalCode: '3810-150' },
+            { name: 'Cacifo na Estação de Comboios de Lisboa', lat: 38.767891, lon: -9.099116, type: 'Estação de Comboios', address: 'Estação de Comboios de Lisboa', postalCode: '1000-007' },
+            { name: 'Cacifo no Centro Comercial Colombo em Lisboa', lat: 38.7551, lon: -9.1885, type: 'Centro Comercial', address: 'Centro Comercial Colombo, Lisboa', postalCode: '1500-392' },
+            { name: 'Cacifo na Praça do Comércio em Lisboa', lat: 38.707779, lon: -9.136744, type: 'Praça', address: 'Praça do Comércio, Lisboa', postalCode: '1100-148' },
+            { name: 'Cacifo na Universidade do Porto', lat: 41.175300, lon: -8.604572, type: 'Universidade', address: 'Universidade do Porto, Porto', postalCode: '4200-072' },
+            { name: 'Cacifo na Estação Ferroviária de Coimbra', lat: 40.209, lon: -8.432225, type: 'Estação de Comboios', address: 'Estação Ferroviária de Coimbra', postalCode: '3000-151' },
+            { name: 'Cacifo no Mercado Municipal de Braga', lat: 41.5545, lon: -8.4273, type: 'Mercado', address: 'Mercado Municipal de Braga', postalCode: '4700-229' }
+        ];
+
+        cacifos.forEach(cacifo => {
+            const marker = L.marker([cacifo.lat, cacifo.lon]).addTo(map);
+            marker.bindPopup(
+                `<div>
+                                <strong>${cacifo.name}</strong><br>
+                                Tipo: ${cacifo.type}<br>
+                                Morada: ${cacifo.address}<br>
+                                Código Postal: ${cacifo.postalCode}<br>
+                                <button class="add-address-btn" onclick="addToLocalStorage('${cacifo.name}', ${cacifo.lat}, ${cacifo.lon})">Adicionar como Morada Virtual</button>
+                            </div>`
+            );
+        });
+
+        function addToLocalStorage(name, lat, lon) {
+            const address = { name, lat, lon };
+            localStorage.setItem('moradaVirtual', JSON.stringify(address));
+            alert('Cacifo adicionado como Morada Virtual!');
+        }
+
+        const savedAddress = JSON.parse(localStorage.getItem('moradaVirtual'));
+        if (savedAddress) {
+            alert(`Morada Virtual: ${savedAddress.name} já está salva.`);
+        }
+        function viewAddress() {
+            const savedAddress = JSON.parse(localStorage.getItem('moradaVirtual'));
+            if (savedAddress) {
+                alert(`Morada Virtual atual: ${savedAddress.name}`);
+            } else {
+                alert('Não há morada virtual salva.');
+            }
+        }
+
+        function removeAddress() {
+            localStorage.removeItem('moradaVirtual');
+            alert('Morada Virtual removida!');
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

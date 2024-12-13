@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+    <title>HomePage</title>
+    <style>
+        .navbar {
+            background-color: #35F9D1;
+            height: 80px;
+            border-radius: 25px;
+            padding: 0.5rem;
+            margin: 20px;
+            align-content: center;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .navbar-toggler {
+            border: none;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            color: #666777;
+            font-weight: 500;
+            position: relative;
+            font-size: 19px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #666777;
+            font-size: 24px;
+            transition: 0.3s color;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #000;
+        }
+
+        @media (min-width: 991px) {
+            .nav-link::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                background-color: #41aeed;
+                visibility: hidden;
+                transition: 0.3s ease-in-out;
+            }
+
+            .nav-link:hover::before, .nav-link.active::before {
+                width: 70%;
+                visibility: visible;
+            }
+        }
+
+
+        .content {
+            margin-top: 150px;
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .search-container {
+            margin: 20px 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 5px;
+            border-radius: 15px;
+            border: 2px solid #28B487;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+            .search-bar:focus {
+                outline: none;
+                border-color: #2196F3;
+                box-shadow: 0px 4px 10px rgba(33, 150, 243, 0.5);
+            }
+
+        .btn-custom {
+            background-color: #E6F7F3;
+            color: #28B487;
+            border: 2px solid #28B487;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+            .btn-custom:hover {
+                background-color: #28B487;
+                color: #fff;
+            }
+
+        .btn-custom-secondary {
+            background-color: #F3F9FE;
+            color: #2196F3;
+            border: 2px solid #2196F3;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+            .btn-custom-secondary:hover {
+                background-color: #2196F3;
+                color: #fff;
+            }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #004d40;
+            color: #e0f2f1;
+            border-radius: 12px;
+            padding: 20px;
+            flex: 0 0 300px;
+            cursor: pointer;
+            transition: transform 0.3s, opacity 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .card.blurred {
+                filter: blur(0.8px);
+                pointer-events: none;
+            }
+
+            .card.selected {
+                transform: scale(1.1);
+                transition: transform 0.3s ease;
+            }
+
+        .status-badge {
+            background-color: #00796b;
+            color: #e0f2f1;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 20px;
+            padding: 5px 10px;
+            display: inline-block;
+        }
+
+        .details-button {
+            background-color: #35F9D1;
+            color: #004d40;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+            .details-button:hover {
+                background-color: #29c1a8;
+                color: #fff;
+            }
+
+        .navbar-nav {
+            margin-left: auto;
+        }
+
+        .offcanvas-body {
+            background-color: #35F9D1;
+        }
+
+        .container-history {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .history-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: left;
+            margin-top: 40px;
+        }
+
+        .filter-buttons {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="notification.html"><i class="fa fa-bell"></i></a>
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" aria-current="page" href="homepage.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="lockersmap.html">Rede de cacifos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="#">Quem Somos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="howto.html">Como utilizar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="help.html">Ajuda</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end" id="bd-theme">
+                        <li><a class="navbar-brand" href="defs.html"><i class="theme-icon fa fa-gear"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container content">
+        <h2>Experimente connosco:</h2>
+        <a href="envio.html" class="btn btn-custom me-3">
+            <i class="fa fa-cube me-2"></i>Enviar
+        </a>
+        <a href="simulacao.html" class="btn btn-custom-secondary">
+            <i class="fa fa-calculator me-2"></i>Simular envio
+        </a>
+    </div>
+
+    <div class="container-history">
+        <h2 class="history-title">Histórico de Envio</h2>
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Insere o ID da encomenda">
+        </div>
+        <div class="d-flex justify-content-center filter-buttons">
+            <button class="btn btn-outline-secondary me-2" onclick="filterCards('em trânsito')">Em trânsito</button>
+            <button class="btn btn-outline-secondary me-2" onclick="filterCards('pendente')">Pendente</button>
+            <button class="btn btn-outline-secondary" onclick="filterCards('entregue')">Entregue</button>
+        </div>
+
+        <div class="card-container">
+            <div class="card" data-status="em trânsito">
+                <h5>ID da encomenda: #1938290287739</h5>
+                <p><strong>Data de Chegada:</strong> 05/09/2023</p>
+                <p><strong>Estado:</strong> <span class="status-badge">em trânsito</span></p>
+                <p><strong>De:</strong> Aveiro</p>
+                <p><strong>Para:</strong> Algarve</p>
+                <button class="details-button"><i class="fa fa-info-circle me-2"></i>Detalhes</button>
+            </div>
+            <div class="card" data-status="pendente">
+                <h5>ID da encomenda: #1839283761987</h5>
+                <p><strong>Data de Chegada:</strong> 03/09/2023</p>
+                <p><strong>Estado:</strong> <span class="status-badge">pendente</span></p>
+                <p><strong>De:</strong> Porto</p>
+                <p><strong>Para:</strong> Lisboa</p>
+                <button class="details-button"><i class="fa fa-info-circle me-2"></i>Detalhes</button>
+            </div>
+            <div class="card" data-status="entregue">
+                <h5>ID da encomenda: #1234567890123</h5>
+                <p><strong>Data de Chegada:</strong> 01/09/2023</p>
+                <p><strong>Estado:</strong> <span class="status-badge">entregue</span></p>
+                <p><strong>De:</strong> Braga</p>
+                <p><strong>Para:</strong> Coimbra</p>
+                <button class="details-button"><i class="fa fa-info-circle me-2"></i>Detalhes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterCards(status) {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (card.getAttribute('data-status') === status) {
+                    card.classList.remove('blurred');
+                    card.classList.add('selected');
+                } else {
+                    card.classList.add('blurred');
+                    card.classList.remove('selected');
+                }
+            });
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

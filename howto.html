@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+    <title>Como Utilizar</title>
+    <style>
+        body {
+            padding-bottom: 20px;
+            padding-top: 100px;
+            font-family: "Open Sans", sans-serif;
+
+        }
+        .navbar {
+            background-color: #35F9D1;
+            height: 80px;
+            border-radius: 25px;
+            padding: 0.5rem;
+            margin: 20px;
+            align-content: center;
+        }
+
+        .navbar-toggler {
+            border: none;
+            font-size: 1.25rem;
+        }
+
+        .nav-link {
+            color: #666777;
+            font-weight: 500;
+            position: relative;
+            font-size: 19px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #666777;
+            font-size: 24px;
+            transition: 0.3s color;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #000;
+        }
+
+        @media (min-width: 991px) {
+            .nav-link::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                background-color: #41aeed;
+                visibility: hidden;
+                transition: 0.3s ease-in-out;
+            }
+
+            .nav-link:hover::before, .nav-link.active::before {
+                width: 70%;
+                visibility: visible;
+            }
+        }
+        
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .step {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+            .step:hover {
+                transform: scale(1.05);
+            }
+
+        .step-icon {
+            background-color: #35F9D1;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .step-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step-description {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #35F9D1;
+            border: 2px solid #35F9D1;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin-top: 20px;
+        }
+
+            .action-btn:hover {
+                background-color: #28b487;
+                color: #fff;
+            }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="notification.html"><i class="fa fa-bell"></i></a>
+            <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="homepage.html">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 " href="lockersmap.html">Rede de cacifos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="#">Quem Somos</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" aria-current="page" href="howto.html">Como utilizar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 "  href="help.html">Ajuda</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end" id="bd-theme">
+                        <li><a class="navbar-brand" href="defs.html"><i class="theme-icon fa fa-gear"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container text-center mt-5">
+        <h2 class="mb-4">Como Utilizar</h2>
+        <div class="step-container">
+            <div class="step">
+                <div class="step-icon"><i class="fa fa-map-marker"></i></div>
+                <div class="step-title">1. Escolhe o cacifo</div>
+                <p class="step-description">Escolhe o cacifo onde queres receber a encomenda, entre os locais disponíveis.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fa fa-cube"></i></div>
+                <div class="step-title">2. Encomenda depositada</div>
+                <p class="step-description">A encomenda é colocada no cacifo selecionado para ti.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fa fa-key"></i></div>
+                <div class="step-title">3. Recebe o PIN</div>
+                <p class="step-description">Recebe o PIN para abrir o cacifo, diretamente no teu telemóvel ou e-mail.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fa fa-unlock"></i></div>
+                <div class="step-title">4. Insere o PIN</div>
+                <p class="step-description">Insere o PIN no cacifo e abre-o para recolher a tua encomenda.</p>
+            </div>
+        </div>
+        <button class="action-btn" onclick="window.location.href='lockersmap.html'">Ver Locais de Cacifos</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

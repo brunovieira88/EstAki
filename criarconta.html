@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+    <style>
+        body {
+            font-family: "Open Sans", sans-serif;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 400px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .container h1 {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                color: #000;
+                text-align: left;
+            }
+
+        .btn-create {
+            width: 100%;
+            padding: 12px;
+            background-color: #35F9D1;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #000;
+        }
+
+            .btn-create:hover {
+                background-color: #29d9b8;
+            }
+
+        .create-account {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+            .create-account a {
+                color: #35F9D1;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                .create-account a:hover {
+                    text-decoration: underline;
+                }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Criar Conta</h1>
+        <form id="createAccountForm" novalidate>
+            <div class="form-group mb-3">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Nome Completo" required>
+                <div class="error" id="name-error"></div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+                <div class="error" id="birthdate-error"></div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                <div class="error" id="email-error"></div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Número de telefone" required>
+                <div class="error" id="phone-error"></div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Palavra-passe" required>
+                <div class="error" id="password-error"></div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirmar palavra-passe" required>
+                <div class="error" id="confirm-password-error"></div>
+            </div>
+            <button class="btn-create" type="submit">Criar Conta</button>
+        </form>
+        <div class="create-account">
+            Já tem conta? <a href="login.html">Fazer login</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            'use strict'
+            var form = document.getElementById('createAccountForm');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                var isValid = true;
+
+                var name = document.getElementById('name').value;
+                if (!name) {
+                    document.getElementById('name-error').textContent = 'Nome é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('name-error').textContent = '';
+                }
+
+                var birthdate = document.getElementById('birthdate').value;
+                if (!birthdate) {
+                    document.getElementById('birthdate-error').textContent = 'Data de nascimento é obrigatória';
+                    isValid = false;
+                } else {
+                    document.getElementById('birthdate-error').textContent = '';
+                }
+
+                var email = document.getElementById('email').value;
+                if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                    document.getElementById('email-error').textContent = 'Por favor, insira um email válido';
+                    isValid = false;
+                } else {
+                    document.getElementById('email-error').textContent = '';
+                }
+
+                var phone = document.getElementById('phone').value;
+                if (!phone) {
+                    document.getElementById('phone-error').textContent = 'Número de telefone é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('phone-error').textContent = '';
+                }
+
+                var password = document.getElementById('password').value;
+                if (!password || password.length < 6) {
+                    document.getElementById('password-error').textContent = 'A senha deve ter pelo menos 6 caracteres';
+                    isValid = false;
+                } else {
+                    document.getElementById('password-error').textContent = '';
+                }
+
+                var confirmPassword = document.getElementById('confirm_password').value;
+                if (confirmPassword !== password) {
+                    document.getElementById('confirm-password-error').textContent = 'As senhas não coincidem';
+                    isValid = false;
+                } else {
+                    document.getElementById('confirm-password-error').textContent = '';
+                }
+
+                if (isValid) {
+                    const user = {
+                        name: name,
+                        birthdate: birthdate,
+                        email: email,
+                        country: document.getElementById('country').value,
+                        phone: phone,
+                        password: password
+                    };
+
+                    localStorage.setItem('user', JSON.stringify(user));
+                    alert('Conta criada com sucesso!');
+                    window.location.href = 'login.html'; 
+                }
+            }, false);
+        })()
+    </script>
+</body>
+</html>

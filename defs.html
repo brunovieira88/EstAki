@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
@@ -66,37 +66,45 @@
                 .create-account a:hover {
                     text-decoration: underline;
                 }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Definições da Conta</h1>
-        <form id="settingsForm">
+        <form id="settingsForm" novalidate>
             <div class="form-group mb-3">
                 <label for="name">Nome</label>
                 <input type="text" id="name" name="name" class="form-control" required>
+                <div class="error" id="name-error"></div>
             </div>
 
             <div class="form-group mb-3">
                 <label for="birthdate">Data de Nascimento</label>
                 <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+                <div class="error" id="birthdate-error"></div>
             </div>
 
             <div class="form-group mb-3">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" class="form-control" required>
+                <div class="error" id="email-error"></div>
             </div>
 
             <div class="form-group mb-3">
                 <label for="phone">Telefone</label>
                 <input type="text" id="phone" name="phone" class="form-control" required>
+                <div class="error" id="phone-error"></div>
             </div>
-
             <div class="form-group mb-3">
                 <label for="password">Senha</label>
                 <input type="password" id="password" name="password" class="form-control" required>
+                <div class="error" id="password-error"></div>
             </div>
-
             <button class="btn-save" type="submit">Guardar Alterações</button>
         </form>
         <div class="create-account">
@@ -119,29 +127,76 @@
                     document.getElementById('password').value = storedUser.password || '';
                 }
             }
-
             loadUserData();
-
             const form = document.getElementById('settingsForm');
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
-
+                let isValid = true;
                 const name = document.getElementById('name').value;
+                if (!name) {
+                    document.getElementById('name-error').textContent = 'Nome é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('name-error').textContent = '';
+                }
+
                 const birthdate = document.getElementById('birthdate').value;
+                if (!birthdate) {
+                    document.getElementById('birthdate-error').textContent = 'Data de nascimento é obrigatória';
+                    isValid = false;
+                } else {
+                    const today = new Date();
+                    const birthDateObj = new Date(birthdate);
+                    const age = today.getFullYear() - birthDateObj.getFullYear();
+                    const monthDiff = today.getMonth() - birthDateObj.getMonth();
+
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+                        age--;
+                    }
+
+                    if (age < 18) {
+                        document.getElementById('birthdate-error').textContent = 'Deve ter pelo menos 18 anos.';
+                        isValid = false;
+                    } else {
+                        document.getElementById('birthdate-error').textContent = '';
+                    }
+                }
+
                 const email = document.getElementById('email').value;
+                if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                    document.getElementById('email-error').textContent = 'Por favor, insira um email válido';
+                    isValid = false;
+                } else {
+                    document.getElementById('email-error').textContent = '';
+                }
+
                 const phone = document.getElementById('phone').value;
+                if (!phone) {
+                    document.getElementById('phone-error').textContent = 'Número de telefone é obrigatório';
+                    isValid = false;
+                } else {
+                    document.getElementById('phone-error').textContent = '';
+                }
+
                 const password = document.getElementById('password').value;
-
-                const updatedUser = {
-                    name: name,
-                    birthdate: birthdate,
-                    email: email,
-                    phone: phone,
-                    password: password
-                };
-
-                localStorage.setItem('user', JSON.stringify(updatedUser));
-                alert('Alterações guardadas com sucesso!');
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+                if (!passwordRegex.test(password)) {
+                    document.getElementById('password-error').textContent = 'A palavra-passe deve conter pelo menos 8 caracteres, incluindo uma maiúscula, uma minúscula, um número e um caractere especial.';
+                    isValid = false;
+                } else {
+                    document.getElementById('password-error').textContent = '';
+                }
+                if (isValid) {
+                    const updatedUser = {
+                        name: name,
+                        birthdate: birthdate,
+                        email: email,
+                        phone: phone,
+                        password: password
+                    };
+                    localStorage.setItem('user', JSON.stringify(updatedUser));
+                    alert('Alterações guardadas com sucesso!');
+                }
             });
         })();
     </script>

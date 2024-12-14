@@ -152,9 +152,12 @@
                     document.getElementById('email-error').textContent = '';
                 }
 
-                var phone = document.getElementById('phone').value;
+                var phone = document.getElementById('phone').value.trim();
                 if (!phone) {
                     document.getElementById('phone-error').textContent = 'Número de telefone é obrigatório';
+                    isValid = false;
+                } else if (!phoneRegex.test(phone)) {
+                    document.getElementById('phone-error').textContent = 'Por favor, insira um número de telefone válido.';
                     isValid = false;
                 } else {
                     document.getElementById('phone-error').textContent = '';

@@ -110,21 +110,31 @@
                     emailField.classList.add('is-valid');
                 }
 
-                if (passwordField.value === '') {
-                    passwordField.classList.add('is-invalid');
+                var storedUser = JSON.parse(localStorage.getItem('user'));
+                var email = emailField.value;
+                var password = passwordField.value;
+
+                if (email === '' || password === '') {
+                    if (email === '') emailField.classList.add('is-invalid');
+                    if (password === '') passwordField.classList.add('is-invalid');
                 } else {
-                    passwordField.classList.add('is-valid');
+                    if (storedUser && storedUser.email === email) {
+                        if (storedUser.password === password) {
+                            passwordField.classList.add('is-valid');
+                        } else {
+                            passwordField.classList.add('is-invalid');
+                        }
+                    } else {
+                        emailField.classList.add('is-invalid');
+                        passwordField.classList.add('is-invalid');
+                    }
                 }
 
-                if (emailField.value !== '' && passwordField.value !== '') {
-                    const storedUser = JSON.parse(localStorage.getItem('user'));
-                    const email = emailField.value;
-                    const password = passwordField.value;
-
-                    if (storedUser && storedUser.email === email && storedUser.password === password) {
-                        alert('Login bem-sucedido!');
-                        window.location.href = 'homepage.html';
-                    } else {
+                if (storedUser && storedUser.email === email && storedUser.password === password) {
+                    alert('Login bem-sucedido!');
+                    window.location.href = 'homepage.html';
+                } else {
+                    if (email !== '' && password !== '') {
                         alert('Email ou senha incorretos.');
                     }
                 }

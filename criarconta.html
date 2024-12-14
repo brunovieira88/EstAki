@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
@@ -108,18 +108,14 @@
             Já tem conta? <a href="login.html">Fazer login</a>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         (function () {
             'use strict'
             var form = document.getElementById('createAccountForm');
-
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
-
                 var isValid = true;
-
                 var name = document.getElementById('name').value;
                 if (!name) {
                     document.getElementById('name-error').textContent = 'Nome é obrigatório';
@@ -127,15 +123,27 @@
                 } else {
                     document.getElementById('name-error').textContent = '';
                 }
-
                 var birthdate = document.getElementById('birthdate').value;
                 if (!birthdate) {
                     document.getElementById('birthdate-error').textContent = 'Data de nascimento é obrigatória';
                     isValid = false;
                 } else {
-                    document.getElementById('birthdate-error').textContent = '';
-                }
+                    var today = new Date();
+                    var birthDateObj = new Date(birthdate);
+                    var age = today.getFullYear() - birthDateObj.getFullYear();
+                    var monthDiff = today.getMonth() - birthDateObj.getMonth();
 
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateObj.getDate())) {
+                        age--;
+                    }
+
+                    if (age < 18) {
+                        document.getElementById('birthdate-error').textContent = 'Deve ter pelo menos 18 anos.';
+                        isValid = false;
+                    } else {
+                        document.getElementById('birthdate-error').textContent = '';
+                    }
+                }
                 var email = document.getElementById('email').value;
                 if (!email || !/\S+@\S+\.\S+/.test(email)) {
                     document.getElementById('email-error').textContent = 'Por favor, insira um email válido';
@@ -151,23 +159,21 @@
                 } else {
                     document.getElementById('phone-error').textContent = '';
                 }
-
-                var password = document.getElementById('password').value;
-                if (!password || password.length < 6) {
-                    document.getElementById('password-error').textContent = 'A senha deve ter pelo menos 6 caracteres';
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm_password').value;
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+                if (!passwordRegex.test(password)) {
+                    document.getElementById('password-error').textContent = 'A palavra-passe deve conter pelo menos 8 caracteres, incluindo uma maiúscula, uma minúscula, um número e um caractere especial.';
                     isValid = false;
                 } else {
                     document.getElementById('password-error').textContent = '';
                 }
-
-                var confirmPassword = document.getElementById('confirm_password').value;
-                if (confirmPassword !== password) {
-                    document.getElementById('confirm-password-error').textContent = 'As senhas não coincidem';
+                if (password !== confirmPassword) {
+                    document.getElementById('confirm-password-error').textContent = 'As palavras-passe não coincidem.';
                     isValid = false;
                 } else {
                     document.getElementById('confirm-password-error').textContent = '';
                 }
-
                 if (isValid) {
                     const user = {
                         name: name,
@@ -176,7 +182,6 @@
                         phone: phone,
                         password: password
                     };
-
                     localStorage.setItem('user', JSON.stringify(user));
                     alert('Conta criada com sucesso!');
                     window.location.href = 'login.html'; 

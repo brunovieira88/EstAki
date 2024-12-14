@@ -28,12 +28,12 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-            .container h1 {
-                font-size: 28px;
-                font-weight: bold;
-                margin-bottom: 20px;
-                color: #000;
-            }
+        .container h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #000;
+        }
 
         .btn-save {
             width: 100%;
@@ -47,9 +47,9 @@
             color: #000;
         }
 
-            .btn-save:hover {
-                background-color: #29d9b8;
-            }
+        .btn-save:hover {
+            background-color: #29d9b8;
+        }
 
         .create-account {
             text-align: center;
@@ -57,15 +57,15 @@
             font-size: 14px;
         }
 
-            .create-account a {
-                color: #35F9D1;
-                text-decoration: none;
-                font-weight: bold;
-            }
+        .create-account a {
+            color: #35F9D1;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-                .create-account a:hover {
-                    text-decoration: underline;
-                }
+        .create-account a:hover {
+            text-decoration: underline;
+        }
 
         .error {
             color: red;
@@ -132,6 +132,7 @@
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
                 let isValid = true;
+
                 const name = document.getElementById('name').value;
                 if (!name) {
                     document.getElementById('name-error').textContent = 'Nome é obrigatório';
@@ -170,9 +171,13 @@
                     document.getElementById('email-error').textContent = '';
                 }
 
-                const phone = document.getElementById('phone').value;
+                const phone = document.getElementById('phone').value.trim();
+                const phoneRegex = /^9\d{8}$/; 
                 if (!phone) {
                     document.getElementById('phone-error').textContent = 'Número de telefone é obrigatório';
+                    isValid = false;
+                } else if (!phoneRegex.test(phone)) {
+                    document.getElementById('phone-error').textContent = 'Por favor, insira um número de telemóvel válido com 9 dígitos.';
                     isValid = false;
                 } else {
                     document.getElementById('phone-error').textContent = '';
@@ -186,6 +191,7 @@
                 } else {
                     document.getElementById('password-error').textContent = '';
                 }
+
                 if (isValid) {
                     const updatedUser = {
                         name: name,

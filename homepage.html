@@ -279,35 +279,33 @@
             <button class="btn btn-outline-secondary" onclick="filterCards('entregue')">Entregue</button>
         </div>
 
-        <div class="card-container">
-            <div class="card" data-status="em trânsito">
-                <h5>ID da encomenda: #1938290287739</h5>
-                <p><strong>Data de Chegada:</strong> 05/09/2023</p>
-                <p><strong>Estado:</strong> <span class="status-badge">em trânsito</span></p>
-                <p><strong>De:</strong> Aveiro</p>
-                <p><strong>Para:</strong> Algarve</p>
-                <button class="details-button"><i class="fa fa-info-circle me-2"></i>Detalhes</button>
-            </div>
-            <div class="card" data-status="pendente">
-                <h5>ID da encomenda: #1839283761987</h5>
-                <p><strong>Data de Chegada:</strong> 03/09/2023</p>
-                <p><strong>Estado:</strong> <span class="status-badge">pendente</span></p>
-                <p><strong>De:</strong> Porto</p>
-                <p><strong>Para:</strong> Lisboa</p>
-                <button class="details-button"><i class="fa fa-info-circle me-2"></i>Detalhes</button>
-            </div>
-            <div class="card" data-status="entregue">
-                <h5>ID da encomenda: #1234567890123</h5>
-                <p><strong>Data de Chegada:</strong> 01/09/2023</p>
-                <p><strong>Estado:</strong> <span class="status-badge">entregue</span></p>
-                <p><strong>De:</strong> Braga</p>
-                <p><strong>Para:</strong> Coimbra</p>
-                <button class="details-button"><i class="fa fa-info-circle me-2"></i>Detalhes</button>
-            </div>
-        </div>
-    </div>
+        <div class="card-container" id="cardContainer"></div>
 
+    </div>
     <script>
+        // Obter as encomendas do localStorage
+        const encomendas = JSON.parse(localStorage.getItem('encomendas')) || [];
+
+        const cardContainer = document.getElementById('cardContainer');
+
+        // Limpar e adicionar os cartões
+        cardContainer.innerHTML = '';
+        encomendas.forEach(encomenda => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.setAttribute('data-status', encomenda.estado);
+
+            card.innerHTML = `
+                <h5>ID da encomenda: ${encomenda.id}</h5>
+                <p><strong>Origem:</strong> ${encomenda.origem}</p>
+                <p><strong>Destino:</strong> ${encomenda.destino}</p>
+                <p><strong>Tipo de envio:</strong> ${encomenda.tipoEnvio}</p>
+                <p><strong>Estado:</strong> <span class="status-badge">${encomenda.estado}</span></p>
+            `;
+
+            cardContainer.appendChild(card);
+        });
+
         function filterCards(status) {
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {

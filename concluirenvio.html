@@ -139,8 +139,7 @@
                 <li><strong>Peso:</strong> ${detalhes.peso} kg</li>
                 <li><strong>Dimensões:</strong> ${detalhes.dimensoes}</li>
                 <li><strong>Tipo de envio:</strong> ${detalhes.tipoEnvio}</li>
-                <li><strong>Distância:</strong> X km</li>
-                <li><strong>Total:</strong> €X</li>
+                <li><strong>Total:</strong> </li>
             `;
 
         function cancelar() {
@@ -149,10 +148,64 @@
         }
 
         function concluirEnvio() {
+            const encomendas = JSON.parse(localStorage.getItem('encomendas')) || [];
+
+            encomendas.push({
+                origem: detalhes.origem,
+                destino: detalhes.destino,
+                peso: detalhes.peso,
+                dimensoes: detalhes.dimensoes,
+                tipoEnvio: detalhes.tipoEnvio,
+                preco: calcularPreco(detalhes.peso, detalhes.tipoEnvio),
+                estado: "pendente",
+                id: gerarIdUnico(),
+            });
+
+            localStorage.setItem('encomendas', JSON.stringify(encomendas));
+
             alert('Envio concluído com sucesso!');
             window.location.href = 'homepage.html';
-
         }
+
+        function calcularPreco(peso, tipoEnvio) {
+            let preco = peso <= 1 ? 5 : peso <= 5 ? 10 : peso <= 10 ? 15 : 20;
+            if (tipoEnvio === "Envio Rápido") preco *= 2;
+            return preco.toFixed(2);
+        }
+
+        function gerarIdUnico() {
+            return '#' + Math.random().toString(36).substr(2, 12).toUpperCase();
+        }
+
+        function calcularpreco() {
+            const peso = detalhes.peso;
+            let preco = 0;
+
+            if (peso <= 1) {
+                preco = 5; 
+            } else if (peso <= 5) {
+                preco = 10; 
+            } else if (peso <= 10) {
+                preco = 15; 
+            } else {
+                preco = 20; 
+            }
+
+            if (detalhes.tipoEnvio === "Envio Rápido") {
+                preco = preco *2; 
+            }
+
+            const lista = document.getElementById('detalhesEnvio');
+            lista.innerHTML = `
+                <li><strong>Origem:</strong> ${detalhes.origem}</li>
+                <li><strong>Destino:</strong> ${detalhes.destino}</li>
+                <li><strong>Peso:</strong> ${detalhes.peso} kg</li>
+                <li><strong>Dimensões:</strong> ${detalhes.dimensoes}</li>
+                <li><strong>Tipo de envio:</strong> ${detalhes.tipoEnvio}</li>
+                <li><strong>Total:</strong> €${preco.toFixed(2)}</li>
+            `;
+        };
+        calcularpreco();
     </script>
 </body>
 </html>

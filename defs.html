@@ -135,16 +135,12 @@
 
                 var name = document.getElementById('name').value.trim();
                 var nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+){1,}$/;
-                var totalLetters = name.replace(/\s/g, '').length; 
                 
                 if (!name) {
                     document.getElementById('name-error').textContent = 'Nome é obrigatório';
                     isValid = false;
                 } else if (!nameRegex.test(name)) {
                     document.getElementById('name-error').textContent = 'O nome deve ser composto por 2 palavras.';
-                    isValid = false;
-                } else if (totalLetters < 5) {
-                    document.getElementById('name-error').textContent = 'O nome deve conter pelo menos 5 letras no total.';
                     isValid = false;
                 } else {
                     document.getElementById('name-error').textContent = '';
